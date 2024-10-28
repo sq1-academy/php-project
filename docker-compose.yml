@@ -1,0 +1,18 @@
+services:
+  nginx:
+    build:
+      context: ./docker/nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - backend
+  php-fpm:
+    image: php:8.3-fpm-alpine
+    volumes:
+      - .:/var/www/html
+    networks:
+      - backend
+networks:
+  backend:
