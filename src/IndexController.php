@@ -9,7 +9,7 @@ class IndexController
 {
     public function index(Request $request) : Response
     {
-        return new Response('Hello World');
+        return new Response('Store');
     }
 
 
