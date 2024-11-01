@@ -20,7 +20,7 @@ class Stock
     {
         // if exists product in stock update amount
         if ($this->hasProductByName($stockItem->product->name)) {
-            $this->stock[$stockItem->product->name]->amount += $stockItem->amount;
+            $this->stock[$stockItem->product->name] = $this->stock[$stockItem->product->name]->addAmount($stockItem->amount);
 
             return $this;
         }
@@ -38,7 +38,7 @@ class Stock
 
     public function countByProduct(string $string) : int
     {
-        return $this->stock[$string]->amount;
+        return $this->stock[$string]->amount ?? 0;
     }
 
 
@@ -74,8 +74,7 @@ class Stock
             return $collection;
         }
 
-
-        $this->stock[$string] = $this->stock[$string]->updateAmount($amount - $int);
+        $this->stock[$string] = $this->stock[$string]->subtractAmount($int);
         return $collection;
     }
 

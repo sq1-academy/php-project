@@ -15,9 +15,14 @@ readonly class StockItem
         //
     }
 
-    public function updateAmount(int $amount) : StockItem
+    public function addAmount(int $amount) : StockItem
     {
-        return new StockItem($this->product, $amount);
+        return new StockItem($this->product, $this->amount + $amount);
+    }
+
+    public function subtractAmount(int $amount) : StockItem
+    {
+        return new StockItem($this->product, $this->amount - $amount);
     }
 
 }
