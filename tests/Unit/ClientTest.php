@@ -9,7 +9,6 @@ use App\Client;
 #[CoversClass(Client::class)]
 class ClientTest extends TestCase
 {
-
     public function test_create_client()
     {
         $client = new Client(1094, 'Juan',);
