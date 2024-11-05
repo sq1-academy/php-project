@@ -2,19 +2,25 @@
 
 namespace App\Tests\Unit;
 
-use App\Product;
-
+use App\Product\Product;
+use App\Product\ProductID;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Product::class)]
+#[CoversClass(ProductID::class)]
 class ProductTest extends TestCase
 {
-    public function test_create_product() : void
+    public function test_create_product_with_id() : void
     {
-        $product = new Product('Arroz');
+        $productID = new ProductID('mango-65869');
 
-        $this->assertEquals('Arroz', $product->name);
+        $product = new Product($productID, 'Mango');
+
+        $this->assertEquals($productID, $product->getIdentifier());
+
     }
+
+
 
 }
