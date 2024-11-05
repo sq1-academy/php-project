@@ -2,6 +2,8 @@
 
 namespace App\Tests\Unit;
 
+use App\Order\OrderLine;
+use App\ValueObject\Money;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
@@ -21,15 +23,11 @@ class OrderTest extends TestCase
 
         $order = new Order(
             $client,
-            $product,
-            5
         );
+
+        $order ->addLine(orderLine: new OrderLine($product,5,new Money(1234,new Currency('COP'))));
 
         $this->assertEquals('Arroz', $order->getProduct()->name);
 
-
-
     }
-
-
 }

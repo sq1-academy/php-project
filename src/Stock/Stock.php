@@ -19,7 +19,7 @@ class Stock
     public function addProduct(StockItem $stockItem) : Stock
     {
         // if exists product in stock update amount
-        if ($this->hasProductByName($stockItem->product->name)) {
+        if ($this->hasProductByName(string: $stockItem->product->name)) {
             $this->stock[$stockItem->product->name] = $this->stock[$stockItem->product->name]->addAmount($stockItem->amount);
 
             return $this;
