@@ -25,4 +25,9 @@ readonly class StockItem
         return new StockItem($this->product, $this->amount - $amount);
     }
 
+    public function getPrice()
+    {
+        return $this->product->getPrice();
+    }
+
 }
