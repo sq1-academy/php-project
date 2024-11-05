@@ -77,8 +77,26 @@ class Stock
         $this->stock[$string] = $this->stock[$string]->subtractAmount($int);
         return $collection;
     }
+    
+    public function getPriceByProduct(string $productName) : Money
+    {
+        if(!$this->hasProductByName($productName))
+        {
+            throw new Exception('Product not found');
+        }
 
+        return $this->stock[$productName]->getPrice();
+    }
 
+    public function totalValue(): Money
+    {
+        $totalAmount = 0;
+        foreach($this->stock as $item)
+        {
+            $totalAmount += $item->amount * $item->getPrice()->amount;
+        }
 
+        return new Money($totalAmount, Currency::COP);
+    }
 
 }

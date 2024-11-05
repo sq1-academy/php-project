@@ -5,6 +5,8 @@ namespace App\Tests\Unit;
 use App\Product;
 use App\Stock\Stock;
 use App\Stock\StockItem;
+use App\ValueObject\Money;
+use App\Enum\Currency;
 use Exception;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -27,8 +29,8 @@ class StockTest extends TestCase
     public function test_add_product_to_stock() : void
     {
         $this->stock
-            ->addProduct(new StockItem(new Product('Arroz'), 5))
-            ->addProduct(new StockItem(new Product('Frijoles'), 10));
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 5))
+            ->addProduct(new StockItem(new Product('Frijoles',new Money(1500, Currency::COP)), 10));
 
         $this->assertEquals(2, $this->stock->count());
     }
@@ -36,8 +38,8 @@ class StockTest extends TestCase
     public function test_add_product_to_stock_with_same_product() : void
     {
             $this->stock
-            ->addProduct(new StockItem(new Product('Arroz'), 5))
-            ->addProduct(new StockItem(new Product('Arroz'), 10));
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 5))
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 10));
 
         $this->assertEquals(15, $this->stock->countByProduct('Arroz'));
         $this->assertEquals(1, $this->stock->count());
@@ -46,7 +48,7 @@ class StockTest extends TestCase
 
     public function test_validate_if_exist_product_in_stock() : void
     {
-        $product = new Product('Azucar');
+        $product = new Product('Azucar',new Money(5500, Currency::COP));
         $stockItem = new StockItem($product, 6);
 
         $this->stock->addProduct($stockItem);
@@ -62,8 +64,8 @@ class StockTest extends TestCase
     public function test_get_product_from_stock() : void
     {
         $this->stock
-            ->addProduct(new StockItem(new Product('Arroz'), 5))
-            ->addProduct(new StockItem(new Product('Frijoles'), 10));
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 5))
+            ->addProduct(new StockItem(new Product('Frijoles',new Money(1500, Currency::COP)), 10));
 
         $products =  $this->stock->get('Arroz', 2);
 
@@ -77,7 +79,7 @@ class StockTest extends TestCase
         $this->expectExceptionMessage('Not enough amount');
 
         $this->stock
-            ->addProduct(new StockItem(new Product('Arroz'), 5));
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 5));
 
         $this->stock->get('Arroz', 7);
     }
@@ -85,7 +87,7 @@ class StockTest extends TestCase
     public function test_get_product_from_stock_with_same_amount() : void
     {
         $this->stock
-            ->addProduct(new StockItem(new Product('Frijoles'), 10));
+            ->addProduct(new StockItem(new Product('Frijoles',new Money(1500, Currency::COP)), 10));
 
         $this->stock->get('Frijoles', 10);
 
@@ -98,7 +100,7 @@ class StockTest extends TestCase
         $this->expectExceptionMessage('Product not found');
 
         $this->stock
-            ->addProduct(new StockItem(new Product('Arroz'), 5));
+            ->addProduct(new StockItem(new Product('Arroz',new Money(2100, Currency::COP)), 5));
 
         $this->stock->get('Frijoles', 10);
     }
