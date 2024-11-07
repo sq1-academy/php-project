@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Stock\Stock;
+use Exception;
+
 class Order
 {
     public function __construct(
@@ -14,11 +17,21 @@ class Order
     }
 
     /**
+     * 
+     * @param Stock $stock
+     * @throws Exception
+     */
+    public function process(Stock $stock): void
+    {
+        $productName = $this->product->name;
+        $stockItem = $stock->get($productName, $this->amount);
+    }
+
+    /**
      * @return Product
      */
     public function getProduct(): Product
     {
         return $this->product;
     }
-
 }
