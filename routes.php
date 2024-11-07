@@ -14,4 +14,9 @@ $routes->add('hello', new Route('/hello/{name}', [
     '_controller' => [IndexController::class, 'hello'],
 ]));
 
+$routes->add('invoice', new Route('/invoice', [
+    '_controller' => [IndexController::class, 'createInvoice'],
+]));
+
+
 return $routes;
