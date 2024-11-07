@@ -2,7 +2,7 @@
 
 namespace App\Stock;
 
-use App\Product;
+use App\Product\Product;
 
 readonly class StockItem
 {

@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Client;
+use App\Product\Product;
+
 class Order
 {
     public function __construct(
